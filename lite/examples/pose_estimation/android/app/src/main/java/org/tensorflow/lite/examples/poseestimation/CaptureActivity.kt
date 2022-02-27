@@ -8,8 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.FileProvider
 import org.tensorflow.lite.examples.poseestimation.data.Device
@@ -36,6 +38,7 @@ class CaptureActivity : AppCompatActivity() {
     private lateinit var tvClassificationValue3: TextView
     private lateinit var tvClassificationValue4: TextView
     private lateinit var tvClassificationValue5: TextView
+    private lateinit var llClassification: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,7 @@ class CaptureActivity : AppCompatActivity() {
         tvClassificationValue3 = findViewById(R.id.tvClassificationValue3)
         tvClassificationValue4 = findViewById(R.id.tvClassificationValue4)
         tvClassificationValue5 = findViewById(R.id.tvClassificationValue5)
+        llClassification = findViewById(R.id.llClassification)
         btnTakePhoto.setOnClickListener {
             dispatchTakePictureIntent()
         }
@@ -121,20 +125,25 @@ class CaptureActivity : AppCompatActivity() {
             detector.estimatePoses(bitmap).let {
                 if (it.isNotEmpty()) {
                     val classificationResult = classifier.classify(it[0])
-                    classificationResult.sortedByDescending { score ->
-                        score.second
-                    }.let { result ->
-                        if (result.isEmpty()) return
-                        tvClassificationValue1.text =
-                            "${result[0].first} : (${String.format("%.2f", result[0].second)})"
-                        tvClassificationValue2.text =
-                            "${result[1].first} : (${String.format("%.2f", result[1].second)})"
-                        tvClassificationValue3.text =
-                            "${result[2].first} : (${String.format("%.2f", result[2].second)})"
-                        tvClassificationValue4.text =
-                            "${result[3].first} : (${String.format("%.2f", result[3].second)})"
-                        tvClassificationValue5.text =
-                            "${result[4].first} : (${String.format("%.2f", result[4].second)})"
+                    if (it[0].score > 0.2) {
+                        llClassification.visibility = View.VISIBLE
+                        classificationResult.sortedByDescending { score ->
+                            score.second
+                        }.let { result ->
+                            if (result.isEmpty()) return
+                            tvClassificationValue1.text =
+                                "${result[0].first} : (${String.format("%.2f", result[0].second)})"
+                            tvClassificationValue2.text =
+                                "${result[1].first} : (${String.format("%.2f", result[1].second)})"
+                            tvClassificationValue3.text =
+                                "${result[2].first} : (${String.format("%.2f", result[2].second)})"
+                            tvClassificationValue4.text =
+                                "${result[3].first} : (${String.format("%.2f", result[3].second)})"
+                            tvClassificationValue5.text =
+                                "${result[4].first} : (${String.format("%.2f", result[4].second)})"
+                        }
+                    } else {
+                        llClassification.visibility = View.INVISIBLE
                     }
                 }
 
