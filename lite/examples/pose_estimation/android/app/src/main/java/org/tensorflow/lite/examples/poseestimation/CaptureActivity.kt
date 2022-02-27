@@ -125,15 +125,22 @@ class CaptureActivity : AppCompatActivity() {
                         score.second
                     }.let { result ->
                         if (result.isEmpty()) return
-                        tvClassificationValue1.text = "${result[0].first} : (${String.format("%.2f", result[0].second)})"
-                        tvClassificationValue2.text = "${result[1].first} : (${String.format("%.2f", result[1].second)})"
-                        tvClassificationValue3.text = "${result[2].first} : (${String.format("%.2f", result[2].second)})"
-                        tvClassificationValue4.text = "${result[3].first} : (${String.format("%.2f", result[3].second)})"
-                        tvClassificationValue5.text = "${result[4].first} : (${String.format("%.2f", result[4].second)})"
+                        tvClassificationValue1.text =
+                            "${result[0].first} : (${String.format("%.2f", result[0].second)})"
+                        tvClassificationValue2.text =
+                            "${result[1].first} : (${String.format("%.2f", result[1].second)})"
+                        tvClassificationValue3.text =
+                            "${result[2].first} : (${String.format("%.2f", result[2].second)})"
+                        tvClassificationValue4.text =
+                            "${result[3].first} : (${String.format("%.2f", result[3].second)})"
+                        tvClassificationValue5.text =
+                            "${result[4].first} : (${String.format("%.2f", result[4].second)})"
                     }
                 }
+
+                val output = VisualizationUtils.drawBodyKeypoints(bitmap, it, false)
+                imgImageResult.setImageBitmap(output)
             }
-            imgImageResult.setImageBitmap(bitmap)
         }
     }
 
