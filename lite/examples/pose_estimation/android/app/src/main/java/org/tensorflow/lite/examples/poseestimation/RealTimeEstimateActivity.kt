@@ -54,6 +54,8 @@ class RealTimeEstimateActivity : AppCompatActivity() {
     private lateinit var tvClassificationValue1: TextView
     private lateinit var tvClassificationValue2: TextView
     private lateinit var tvClassificationValue3: TextView
+    private lateinit var tvClassificationValue4: TextView
+    private lateinit var tvClassificationValue5: TextView
     private lateinit var swClassification: SwitchCompat
     private lateinit var vClassificationOption: View
     private var cameraSource: CameraSource? = null
@@ -95,6 +97,8 @@ class RealTimeEstimateActivity : AppCompatActivity() {
         tvClassificationValue1 = findViewById(R.id.tvClassificationValue1)
         tvClassificationValue2 = findViewById(R.id.tvClassificationValue2)
         tvClassificationValue3 = findViewById(R.id.tvClassificationValue3)
+        tvClassificationValue4 = findViewById(R.id.tvClassificationValue4)
+        tvClassificationValue5 = findViewById(R.id.tvClassificationValue5)
         swClassification = findViewById(R.id.swPoseClassification)
         vClassificationOption = findViewById(R.id.vClassificationOption)
         swClassification.setOnCheckedChangeListener(setClassificationListener)
@@ -156,6 +160,14 @@ class RealTimeEstimateActivity : AppCompatActivity() {
                                     R.string.tfe_pe_tv_classification_value,
                                     convertPoseLabels(if (it.size >= 3) it[2] else null)
                                 )
+                                tvClassificationValue4.text = getString(
+                                    R.string.tfe_pe_tv_classification_value,
+                                    convertPoseLabels(if (it.size >= 4) it[3] else null)
+                                )
+                                tvClassificationValue5.text = getString(
+                                    R.string.tfe_pe_tv_classification_value,
+                                    convertPoseLabels(if (it.size >= 5) it[4] else null)
+                                )
                             }
                         }
 
@@ -207,6 +219,8 @@ class RealTimeEstimateActivity : AppCompatActivity() {
         tvClassificationValue1.visibility = visibility
         tvClassificationValue2.visibility = visibility
         tvClassificationValue3.visibility = visibility
+        tvClassificationValue4.visibility = visibility
+        tvClassificationValue5.visibility = visibility
     }
 
     private fun requestPermission() {

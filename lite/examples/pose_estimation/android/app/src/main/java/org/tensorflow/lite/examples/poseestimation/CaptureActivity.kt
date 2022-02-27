@@ -29,15 +29,24 @@ class CaptureActivity : AppCompatActivity() {
     private lateinit var currentPhotoPath: String
     private lateinit var btnTakePhoto: Button
     private lateinit var imgImageResult: ImageView
-    private lateinit var tvClassificationResult: TextView
     private lateinit var detector: PoseDetector
     private lateinit var classifier: PoseClassifier
+    private lateinit var tvClassificationValue1: TextView
+    private lateinit var tvClassificationValue2: TextView
+    private lateinit var tvClassificationValue3: TextView
+    private lateinit var tvClassificationValue4: TextView
+    private lateinit var tvClassificationValue5: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_capture)
         btnTakePhoto = findViewById(R.id.btnTakePhoto)
         imgImageResult = findViewById(R.id.imgImageResult)
-        tvClassificationResult = findViewById(R.id.tvClassification)
+        tvClassificationValue1 = findViewById(R.id.tvClassificationValue1)
+        tvClassificationValue2 = findViewById(R.id.tvClassificationValue2)
+        tvClassificationValue3 = findViewById(R.id.tvClassificationValue3)
+        tvClassificationValue4 = findViewById(R.id.tvClassificationValue4)
+        tvClassificationValue5 = findViewById(R.id.tvClassificationValue5)
         btnTakePhoto.setOnClickListener {
             dispatchTakePictureIntent()
         }
@@ -116,9 +125,11 @@ class CaptureActivity : AppCompatActivity() {
                         score.second
                     }.let { result ->
                         if (result.isEmpty()) return
-
-                        val resultString = "${result[0].first} : ${result[0].second}"
-                        tvClassificationResult.text = resultString
+                        tvClassificationValue1.text = "${result[0].first} : (${String.format("%.2f", result[0].second)})"
+                        tvClassificationValue2.text = "${result[1].first} : (${String.format("%.2f", result[1].second)})"
+                        tvClassificationValue3.text = "${result[2].first} : (${String.format("%.2f", result[2].second)})"
+                        tvClassificationValue4.text = "${result[3].first} : (${String.format("%.2f", result[3].second)})"
+                        tvClassificationValue5.text = "${result[4].first} : (${String.format("%.2f", result[4].second)})"
                     }
                 }
             }

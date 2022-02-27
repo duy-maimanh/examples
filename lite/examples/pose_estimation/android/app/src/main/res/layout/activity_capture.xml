@@ -11,13 +11,41 @@
         android:id="@+id/imgImageResult"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/tvClassification" />
+        android:layout_above="@id/llClassification" />
 
-    <TextView
-        android:id="@+id/tvClassification"
+    <LinearLayout
+        android:id="@+id/llClassification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnTakePhoto" />
+        android:padding="5dp"
+        android:layout_above="@+id/btnTakePhoto"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvClassificationValue1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvClassificationValue2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvClassificationValue3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvClassificationValue4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvClassificationValue5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnTakePhoto"
