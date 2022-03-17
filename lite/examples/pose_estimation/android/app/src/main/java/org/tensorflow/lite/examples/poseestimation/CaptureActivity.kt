@@ -18,6 +18,7 @@ import org.tensorflow.lite.examples.poseestimation.data.Device
 import org.tensorflow.lite.examples.poseestimation.ml.MoveNet
 import org.tensorflow.lite.examples.poseestimation.ml.PoseClassifier
 import org.tensorflow.lite.examples.poseestimation.ml.PoseDetector
+import org.w3c.dom.Text
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -39,6 +40,7 @@ class CaptureActivity : AppCompatActivity() {
     private lateinit var tvClassificationValue4: TextView
     private lateinit var tvClassificationValue5: TextView
     private lateinit var llClassification: LinearLayout
+    private lateinit var tvNoPersonDetected: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +53,7 @@ class CaptureActivity : AppCompatActivity() {
         tvClassificationValue4 = findViewById(R.id.tvClassificationValue4)
         tvClassificationValue5 = findViewById(R.id.tvClassificationValue5)
         llClassification = findViewById(R.id.llClassification)
+        tvNoPersonDetected = findViewById(R.id.tvNoPersonDetected)
         btnTakePhoto.setOnClickListener {
             dispatchTakePictureIntent()
         }
@@ -123,6 +126,7 @@ class CaptureActivity : AppCompatActivity() {
         }
         BitmapFactory.decodeFile(currentPhotoPath, bmOptions)?.also { bitmap ->
             detector.estimatePoses(bitmap).let {
+                var output = bitmap
                 if (it.isNotEmpty()) {
                     val classificationResult = classifier.classify(it[0])
                     if (it[0].score > 0.2) {
@@ -142,12 +146,14 @@ class CaptureActivity : AppCompatActivity() {
                             tvClassificationValue5.text =
                                 "${result[4].first} : (${String.format("%.2f", result[4].second)})"
                         }
+                        tvNoPersonDetected.visibility = View.GONE
+                        output = VisualizationUtils.drawBodyKeypoints(bitmap, it, false)
                     } else {
+                        tvNoPersonDetected.visibility = View.VISIBLE
                         llClassification.visibility = View.INVISIBLE
                     }
                 }
 
-                val output = VisualizationUtils.drawBodyKeypoints(bitmap, it, false)
                 imgImageResult.setImageBitmap(output)
             }
         }

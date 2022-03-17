@@ -13,13 +13,21 @@
         android:layout_height="match_parent"
         android:layout_above="@id/llClassification" />
 
+    <TextView
+        android:id="@+id/tvNoPersonDetected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgImageResult"
+        android:text="No person detected"
+        android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/llClassification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:layout_above="@+id/btnTakePhoto"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/tvClassificationValue1"
